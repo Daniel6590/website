@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Inline SVG Icon Definitions (Nodig voor <use> in HTML) -->
+    <!-- Inline SVG Icon Definitions -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"> <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></symbol> <symbol id="icon-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></symbol> <symbol id="icon-design" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></symbol> <symbol id="icon-soft-skills" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></symbol> <symbol id="icon-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></symbol> <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></symbol> <symbol id="icon-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></symbol> <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol> <symbol id="icon-code-alt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.7 17.7l-2.4-2.4a1 1 0 0 1 0-1.4l2.4-2.4a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4l-1.6 1.6a1 1 0 0 1-1.4 0zM15.7 14.7l-1.6-1.6a1 1 0 0 1 0-1.4l1.6-1.6a1 1 0 0 1 1.4 0l2.4 2.4a1 1 0 0 1 0 1.4l-2.4 2.4a1 1 0 0 1-1.4 0z"></path><circle cx="12" cy="12" r="10"></circle></symbol> <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></symbol> <symbol id="icon-certificate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline><path d="M11.998 17l-2.552 1.205a.5.5 0 0 1-.743-.533l.47-2.79-1.996-1.996a.5.5 0 0 1 .276-.848l2.773-.412L11.5 12.5a.5.5 0 0 1 .996 0l1.23 2.535 2.773.412a.5.5 0 0 1 .276.848l-1.996 1.996.47 2.79a.5.5 0 0 1-.743.533L11.998 17z"></path></symbol> <symbol id="icon-translate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6V4M8 10H6M18 10h-2m-2-4V4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 18l-1-3h8l-1 3m-8-6a3 3 0 1 1 6 0M8 6h8M9.5 12a1 1 0 1 0 0 2h5a1 1 0 1 0 0-2h-5z"></path></symbol> <symbol id="icon-iot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 10a2.5 2.5 0 0 1 5 0V11a4.5 4.5 0 1 1-9 0v-.5A2.5 2.5 0 0 1 7 8h0a2.5 2.5 0 0 1 2.5 2.5V10Zm5 0V9a2.5 2.5 0 0 1 5 0v.5A2.5 2.5 0 0 1 16 12h0a2.5 2.5 0 0 1 2.5 2.5V15a2.5 2.5 0 0 1-5 0v-.5a2.5 2.5 0 0 1-1-2H10.5a2.5 2.5 0 0 1-1-2V10Z"/><path d="M8.83 7A6.01 6.01 0 0 0 12 5c1.61 0 3.1.63 4.24 1.76"/><path d="M6.7 4.5a9 9 0 0 1 10.6 0"/><path d="M14.17 17A6.01 6.01 0 0 0 12 19c-1.61 0-3.1-.63-4.24-1.76"/><path d="M17.3 19.5a9 9 0 0 0-10.6 0"/></symbol> <symbol id="icon-office" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></symbol> </svg>
 
     <div class="container">
         <header>
-            <h1>Daniel Van Dessel</h1>
-            <p class="tagline">Internet of Things Student | Electronics & Embedded Systems Enthusiast</p>
+             <h1>Daniel Van Dessel</h1>
+             <p class="tagline">Internet of Things Student | Electronics & Embedded Systems Enthusiast</p>
         </header>
 
         <main>
@@ -57,8 +57,15 @@
                  <h2>Projecten</h2>
                  <p class="subtle">Mijn voornaamste project is momenteel mijn eindwerk.</p>
                  <div class="project">
-                     <div class="project-placeholder"><span>Architectuur Diagram Placeholder</span></div>
-                     <h3>Eindproject: Sensorio - Enhanced Security Edition</h3>
+                     <div class="slideshow-container">
+                         <div class="slideshow-placeholder"><span>Afbeeldingen worden geladen...</span></div>
+                         <img src="images/project1/image1.jpg" alt="Project Afbeelding 1" class="project-slide" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.slideshow-placeholder').style.display='flex';">
+                         <img src="images/project1/image2.png" alt="Project Afbeelding 2" class="project-slide" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.slideshow-placeholder').style.display='flex';">
+                         <img src="images/project1/schema.png" alt="Project Schema" class="project-slide" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.slideshow-placeholder').style.display='flex';"> <!-- Corrected extension -->
+                         <button class="prev" onclick="changeSlide(-1, this)">❮</button>
+                         <button class="next" onclick="changeSlide(1, this)">❯</button>
+                     </div>
+                     <h3>Eindproject: Veilige luchtkwaliteit meter</h3>
                      <p>Dit Graduaatsproject transformeert een basis IoT-monitoringsysteem naar een <strong>robuust beveiligd platform</strong>. Het doel is niet alleen omgevingsdata (zoals luchtkwaliteit via CO2-sensoren) te meten, maar ook om robuuste <strong>fysieke beveiliging</strong> en <strong>manipulatiedetectie</strong> te integreren voor het apparaat zelf.</p>
                      <p>Belangrijke vernieuwingen omvatten de strategische keuze voor het <strong>ESP-IDF framework</strong> (i.p.v. de standaard Arduino core voor ESP32) vanwege de toegang tot geavanceerde security features zoals <strong>Secure Boot V2</strong> en <strong>Flash Encryption</strong>. Dit beschermt de firmware en gevoelige data (zoals mTLS keys en RFID tags) tegen uitlezen en modificatie, zelfs bij fysieke toegang tot de hardware.</p>
                      <p>Communicatie gebeurt via MQTT over een directe <strong>end-to-end mTLS verbinding</strong> tussen de ESP32 en de Mosquitto broker, wat zorgt voor encryptie én wederzijdse authenticatie. Verder omvat het project <strong>fysieke toegangscontrole</strong> (RFID lezer, elektromagnetisch slot), geavanceerde <strong>tampering detectie</strong> (IMU, afstandssensor) en <strong>actieve alarmfuncties</strong> (lokale speaker, Discord webhook notificaties).</p>
@@ -78,15 +85,15 @@
                  <p>Interesse in een samenwerking, een stageplaats, of gewoon een vraag? Aarzel niet om contact op te nemen!</p>
                  <ul>
                      <li><svg class="icon large"><use xlink:href="#icon-email"/></svg><a href="mailto:daniel6592001@gmail.com">daniel6592001@gmail.com</a></li>
-                     <li><svg class="icon large"><use xlink:href="#icon-linkedin"/></svg><a href="[Link naar jouw LinkedIn profiel]" target="_blank" rel="noopener noreferrer">[Voeg hier je LinkedIn profiel link toe]</a></li>
-                     <li><svg class="icon large"><use xlink:href="#icon-github"/></svg><a href="[Link naar jouw GitHub profiel]" target="_blank" rel="noopener noreferrer">[Voeg hier je GitHub profiel link toe]</a></li>
+                     <li><svg class="icon large"><use xlink:href="#icon-linkedin"/></svg><a href="https://www.linkedin.com/in/daniel-van-dessel/" target="_blank" rel="noopener noreferrer">LinkedIn Profiel</a></li> <!-- Correcte link -->
+                     <li><svg class="icon large"><use xlink:href="#icon-github"/></svg><a href="https://github.com/Daniel6590" target="_blank" rel="noopener noreferrer">GitHub Profiel (Daniel6590)</a></li>
                  </ul>
              </div>
         </main>
     </div><!-- End Container -->
 
     <footer>
-         &copy; <span id="year"></span> Daniel Van Dessel.
+         © <span id="year"></span> Daniel Van Dessel.
     </footer>
 
     <!-- Link JavaScript -->
