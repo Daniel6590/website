@@ -2,393 +2,181 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Essentieel voor responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title>Portfolio - [Jouw Naam]</title>
+    <title>Portfolio - Daniel Van Dessel</title>
     <style>
         /* --- Global Styles & Variables --- */
         :root {
-            --primary-color: #007bff;
-            --primary-color-hover: #0056b3;
-            --secondary-accent: #6f42c1;
-            --gradient-start: var(--primary-color);
-            --gradient-end: #0056b3;
-
-            /* Light Mode Colors */
-            --page-bg-color: #f0f2f5;
-            --container-bg-color: #ffffff;
-            --project-bg-color: #fdfdfd;
-            --text-color: #343a40;
-            --heading-color: #212529;
-            --subtle-text-color: #6c757d;
-            --border-color: #dee2e6;
-            --subtle-border-color: #e9ecef;
-            --hover-bg-color: #e9ecef;
-            --active-tab-border: var(--primary-color);
-            --shadow-color: rgba(0, 0, 0, 0.075);
-            --link-color: var(--primary-color);
-            --link-hover-color: var(--primary-color-hover);
-            --footer-text-color: #6c757d;
-            --icon-color: #495057;
-            --tag-bg-color: #e9ecef;
-            --tag-text-color: #495057;
-            --quote-border-color: var(--primary-color);
-
-            /* Shared Variables */
-            --content-max-width: 960px;
-            --border-radius: 8px;
-            --border-radius-small: 4px;
+            --primary-color: #005c99; --primary-color-hover: #004471; --secondary-accent: #6f42c1;
+            --gradient-start: var(--primary-color); --gradient-end: var(--primary-color-hover);
+            /* Light Mode */
+            --page-bg-color: #f0f2f5; --container-bg-color: #ffffff; --project-bg-color: #fdfdfd;
+            --text-color: #343a40; --heading-color: #212529; --subtle-text-color: #6c757d;
+            --border-color: #dee2e6; --subtle-border-color: #e9ecef; --hover-bg-color: #e9ecef;
+            --active-tab-border: var(--primary-color); --shadow-color: rgba(0, 0, 0, 0.075);
+            --link-color: var(--primary-color); --link-hover-color: var(--primary-color-hover);
+            --footer-text-color: #6c757d; --icon-color: #495057;
+            --tag-bg-color: #e9ecef; --tag-text-color: #495057;
+            --certificate-bg: #f8f9fa;
+            /* Shared */
+            --content-max-width: 960px; --border-radius: 8px; --border-radius-small: 4px;
             --transition-speed: 0.25s;
             --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
         }
-
-        /* --- Dark Mode Overrides --- */
+        /* Dark Mode */
         @media (prefers-color-scheme: dark) {
             :root {
-                --page-bg-color: #121212;
-                --container-bg-color: #1e1e1e;
-                --project-bg-color: #252525;
-                --text-color: #e0e0e0;
-                --heading-color: #ffffff;
-                --subtle-text-color: #adb5bd;
-                --border-color: #444444;
-                --subtle-border-color: #333333;
-                --hover-bg-color: #343a40;
-                --active-tab-border: #4dabf7;
-                --shadow-color: rgba(0, 0, 0, 0.2);
-                --link-color: #4dabf7;
-                --link-hover-color: #74c0fc;
-                --footer-text-color: #adb5bd;
-                --icon-color: #ced4da;
-                --tag-bg-color: #343a40;
-                --tag-text-color: #ced4da;
-                --quote-border-color: var(--link-color);
-                --gradient-start: #1e1e1e;
-                --gradient-end: #1e1e1e;
+                --page-bg-color: #121212; --container-bg-color: #1e1e1e; --project-bg-color: #252525;
+                --text-color: #e0e0e0; --heading-color: #ffffff; --subtle-text-color: #adb5bd;
+                --border-color: #444444; --subtle-border-color: #333333; --hover-bg-color: #343a40;
+                --active-tab-border: #4dabf7; --shadow-color: rgba(0, 0, 0, 0.2);
+                --link-color: #4dabf7; --link-hover-color: #74c0fc; --footer-text-color: #adb5bd;
+                --icon-color: #ced4da; --tag-bg-color: #343a40; --tag-text-color: #ced4da;
+                --gradient-start: #1e1e1e; --gradient-end: #1e1e1e; --certificate-bg: #2a2a2a;
             }
         }
-
-        /* --- Base & General --- */
+        /* Base & General */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html {
-            scroll-behavior: smooth;
-            scrollbar-gutter: stable; /* Voorkomt layout shift door scrollbar */
-            overflow-y: auto; /* Toon scrollbar alleen indien nodig */
-            font-size: 16px; /* Basis font-size voor rem units */
-        }
-        body {
-            font-family: var(--font-stack);
-            line-height: 1.7;
-            color: var(--text-color);
-            background-color: var(--page-bg-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-        }
-        .container {
-            width: 90%; /* Maakt container flexibel */
-            max-width: var(--content-max-width); /* Maximale breedte voor leesbaarheid */
-            margin: 2.5rem auto;
-            background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 5px), var(--container-bg-color);
-            background-repeat: no-repeat;
-            background-size: 100% 5px, 100% 100%;
-            padding: 2.5rem; /* Standaard padding */
-            border-radius: var(--border-radius);
-            box-shadow: 0 5px 20px var(--shadow-color);
-            flex-grow: 1;
-            transition: background-color var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed), padding var(--transition-speed);
-            border: 1px solid var(--border-color);
-        }
-
-        /* --- Typography & Links --- */
+        html { scroll-behavior: smooth; scrollbar-gutter: stable; overflow-y: auto; font-size: 16px; }
+        body { font-family: var(--font-stack); line-height: 1.7; color: var(--text-color); background-color: var(--page-bg-color); display: flex; flex-direction: column; min-height: 100vh; transition: background-color var(--transition-speed), color var(--transition-speed); }
+        .container { width: 90%; max-width: var(--content-max-width); margin: 2.5rem auto; background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 5px), var(--container-bg-color); background-repeat: no-repeat; background-size: 100% 5px, 100% 100%; padding: 2.5rem; border-radius: var(--border-radius); box-shadow: 0 5px 20px var(--shadow-color); flex-grow: 1; transition: background-color var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed), padding var(--transition-speed); border: 1px solid var(--border-color); }
+        /* Typography & Links */
         h1, h2, h3, h4 { color: var(--heading-color); margin-bottom: 1.25rem; line-height: 1.3; font-weight: 600; }
-        h1 { text-align: center; margin-bottom: 2rem; font-size: 2.25rem; color: var(--primary-color);
-             @media (prefers-color-scheme: dark) { color: var(--link-color); }
-         }
-        h2 { font-size: 1.75rem; border-bottom: 2px solid var(--subtle-border-color); padding-bottom: 0.5rem; margin-top: 1rem; } /* Added margin-top */
-        h2:first-child { margin-top: 0; } /* Remove top margin for first h2 in a container */
+        h1 { text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; color: var(--primary-color); font-weight: 700; @media (prefers-color-scheme: dark) { color: var(--link-color); } }
+        h2 { font-size: 1.75rem; border-bottom: 2px solid var(--subtle-border-color); padding-bottom: 0.5rem; margin-top: 2rem; }
+        h2:first-of-type { margin-top: 0; }
         h3 { font-size: 1.3rem; }
-        h4 { font-size: 1.1rem; color: var(--subtle-text-color); margin-bottom: 0.8rem; }
+        h4 { font-size: 1.1rem; color: var(--heading-color); margin-bottom: 0.8rem; font-weight: 600;}
         p { margin-bottom: 1rem; }
         a { color: var(--link-color); text-decoration: none; transition: color var(--transition-speed); font-weight: 500; }
         a:hover { color: var(--link-hover-color); text-decoration: underline; }
-        strong { font-weight: 700; } /* Made strong slightly bolder */
+        strong { font-weight: 700; }
         ul { margin-left: 1.5rem; margin-bottom: 1rem; }
-        code {
-            background-color: var(--hover-bg-color); padding: 0.2em 0.4em; margin: 0;
-            font-size: 85%; border-radius: var(--border-radius-small);
-            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; color: var(--text-color);
-        }
-
-        /* --- Helper Classes & Icons --- */
+        li { margin-bottom: 0.4rem; }
+        code { background-color: var(--hover-bg-color); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: var(--border-radius-small); font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; color: var(--text-color); }
+        /* Helper Classes & Icons */
+        .text-center { text-align: center; }
+        .tagline { text-align: center; margin-top: -0.25rem; margin-bottom: 2.5rem; color: var(--subtle-text-color); font-size: 1.1rem; }
         .subtle { color: var(--subtle-text-color); font-size: 0.9em; }
-        .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: currentColor; margin-right: 0.3em; }
-        .icon.large { width: 1.5em; height: 1.5em; vertical-align: -0.25em; margin-right: 0.8em;}
-        .button-link {
-            display: inline-block; background-color: var(--link-color); color: white !important;
-            @media (prefers-color-scheme: dark) { background-color: var(--link-color); color: #111 !important; }
-            padding: 0.6em 1.2em; /* Slightly larger padding */ border-radius: var(--border-radius-small); text-decoration: none;
-            transition: background-color var(--transition-speed), transform var(--transition-speed); box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .button-link:hover { background-color: var(--link-hover-color); text-decoration: none; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15);}
-        .button-link .icon { margin-right: 0.5em; }
-
-        /* --- Tabs --- */
-        .tab-container {
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-            display: flex; /* Use flexbox for tabs */
-            flex-wrap: wrap; /* Allow tabs to wrap on smaller screens before stacking */
-        }
-        .tab-button {
-            background-color: transparent; border: none; outline: none; cursor: pointer;
-            padding: 12px 18px;
-            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-            font-size: 1rem; font-weight: 500;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -1px; /* Overlap container border */
-            color: var(--subtle-text-color);
-            flex-shrink: 0; /* Prevent buttons from shrinking */
-             white-space: nowrap; /* Prevent text wrapping inside button */
-             display: inline-flex; /* Align icon and text */
-            align-items: center;
-            gap: 0.4em; /* Space between icon and text */
-        }
+        .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: currentColor; margin-right: 0.4em; }
+        .icon.large { width: 1.4em; height: 1.4em; vertical-align: -0.25em; margin-right: 0.8em;}
+        /* Tabs */
+        .tab-container { border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; display: flex; flex-wrap: wrap; }
+        .tab-button { background-color: transparent; border: none; outline: none; cursor: pointer; padding: 12px 18px; transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed); font-size: 1rem; font-weight: 500; border-bottom: 3px solid transparent; margin-bottom: -1px; color: var(--subtle-text-color); flex-shrink: 0; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.4em; }
         .tab-button:hover { background-color: var(--hover-bg-color); color: var(--text-color); }
         .tab-button.active { border-bottom-color: var(--active-tab-border); color: var(--heading-color); font-weight: 600; }
-
-        /* --- Tab Content --- */
+        /* Tab Content */
         .tab-content { display: none; padding-top: 1rem; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } } /* Subtle slide up */
-
-        /* --- About Me Section --- */
-        #OverMij .about-intro { margin-bottom: 2.5rem; overflow: hidden; /* Contain float */ }
-        #OverMij .profile-pic-container {
-            max-width: 150px; float: left; margin: 0 2rem 1rem 0;
-            border-radius: 50%; overflow: hidden; border: 3px solid var(--border-color);
-            box-shadow: 0 2px 5px var(--shadow-color);
-        }
-        #OverMij .profile-pic-container img { display: block; width: 100%; height: auto; }
-        /* No need for clearfix ::after because of overflow: hidden on parent */
-
-        /* Skills */
-        .skills-section { margin-top: 2.5rem; }
-        .skills-category { margin-bottom: 2rem; }
-        .skills-list {
-            list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem;
-        }
-        .skill-item {
-            background-color: var(--hover-bg-color); border: 1px solid var(--subtle-border-color);
-            border-radius: var(--border-radius-small); padding: 0.8rem 1.2rem; display: flex;
-            align-items: center; transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-            flex-basis: calc(33.33% - 1rem); /* 3 columns by default */
-            min-width: 180px; /* Min width before wrapping within flex basis */
-            flex-grow: 1;
-        }
-        .skill-item:hover { transform: translateY(-3px); box-shadow: 0 4px 8px var(--shadow-color); }
-        .skill-item .icon { color: var(--primary-color); flex-shrink: 0; margin-right: 0.8em; } /* More space for icon */
-        .skill-item span { flex-grow: 1; text-align: left; font-weight: 500; }
-
-        /* --- Projects Section --- */
-        .project {
-            background-color: var(--project-bg-color); border: 1px solid var(--border-color);
-            padding: 1.5rem 2rem; margin-bottom: 2rem; border-radius: var(--border-radius);
-            box-shadow: 0 3px 8px var(--shadow-color);
-            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed), border-color var(--transition-speed);
-            overflow: hidden;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* About Me Section */
+        #OverMij .about-intro { margin-bottom: 2.5rem; overflow: hidden; }
+        #OverMij .profile-pic-container { float: left; width: 120px; height: 120px; margin: 0 2rem 1rem 0; border-radius: 50%; background-color: var(--hover-bg-color); border: 3px solid var(--border-color); box-shadow: 0 2px 5px var(--shadow-color); display: flex; align-items: center; justify-content: center; } /* Base centering */
+        #OverMij .profile-pic-container svg { width: 50%; height: 50%; color: var(--subtle-text-color); }
+        /* Skills, Certificaten, Talen */
+        .info-section { margin-top: 2.5rem; }
+        .info-category { margin-bottom: 2rem; }
+        .info-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+        .info-item { background-color: var(--hover-bg-color); border: 1px solid var(--subtle-border-color); border-radius: var(--border-radius-small); padding: 0.8rem 1.2rem; display: flex; align-items: center; transition: transform var(--transition-speed), box-shadow var(--transition-speed); flex-basis: calc(33.33% - 1rem); min-width: 180px; flex-grow: 1; }
+        .info-item:hover { transform: translateY(-3px); box-shadow: 0 4px 8px var(--shadow-color); }
+        .info-item .icon { color: var(--primary-color); flex-shrink: 0; margin-right: 0.8em; }
+        .info-item span { flex-grow: 1; text-align: left; font-weight: 500; }
+        .certificate-item { padding: 1rem; background-color: var(--certificate-bg); border: 1px solid var(--border-color); margin-bottom: 1rem; border-radius: var(--border-radius-small); }
+        .certificate-item p { margin-bottom: 0; }
+        /* Projects Section */
+        .project { background-color: var(--project-bg-color); border: 1px solid var(--border-color); padding: 1.5rem 2rem; margin-bottom: 2rem; border-radius: var(--border-radius); box-shadow: 0 3px 8px var(--shadow-color); transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed), border-color var(--transition-speed); overflow: hidden; }
         .project:hover { transform: translateY(-5px); box-shadow: 0 6px 15px var(--shadow-color); }
-        .project img {
-            max-width: 100%; height: auto; border-radius: var(--border-radius-small); margin-bottom: 1.5rem; display: block; border: 1px solid var(--subtle-border-color);
-        }
-        .project h3 {
-            margin-top: 0; margin-bottom: 0.5rem; color: var(--heading-color);
-            display: flex; align-items: center; flex-wrap: wrap; /* Allow links to wrap if title is long */
-        }
-        .project-links { margin-left: auto; padding-left: 1rem; display: flex; gap: 0.8rem; align-items: center;}
-        .project-links a { font-size: 1.2rem; color: var(--link-color); display: inline-block; line-height: 1;}
+        .project img, .project-placeholder { width: 100%; height: 0; padding-bottom: 56.25%; position: relative; background: var(--hover-bg-color); border-radius: var(--border-radius-small); margin-bottom: 1.5rem; border: 1px solid var(--subtle-border-color); }
+        .project-placeholder span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size:0.8em; color: var(--subtle-text-color); text-align:center; padding: 1em; }
+        .project h3 { margin-top: 0; margin-bottom: 0.5rem; color: var(--heading-color); display: flex; align-items: center; flex-wrap: wrap; }
+        .project-links { margin-left: auto; padding-left: 1rem; display: flex; gap: 0.8rem; align-items: center; }
+        .project-links a { font-size: 1.2rem; color: var(--link-color); display: inline-block; line-height: 1; }
         .project-links a:hover { color: var(--link-hover-color); }
         .project-tags { margin: 1rem 0; }
-        .tag {
-            display: inline-block; background-color: var(--tag-bg-color); color: var(--tag-text-color);
-            font-size: 0.8em; padding: 0.3em 0.8em; border-radius: 1em;
-            margin-right: 0.5em; margin-bottom: 0.5em; font-weight: 500; white-space: nowrap;
-        }
-
-        /* --- Contact Section --- */
-        #Contact ul { list-style: none; padding: 0; margin: 0; }
-        #Contact li { display: flex; align-items: center; margin-bottom: 1.25rem; /* More space */ font-size: 1.05rem; /* Slightly larger */}
-        #Contact .icon { color: var(--icon-color); } /* Removed fixed margin-right, handled by large class */
+        .tag { display: inline-block; background-color: var(--tag-bg-color); color: var(--tag-text-color); font-size: 0.8em; padding: 0.3em 0.8em; border-radius: 1em; margin-right: 0.5em; margin-bottom: 0.5em; font-weight: 500; white-space: nowrap; }
+        /* Contact Section */
+        #Contact ul { list-style: none; padding: 0; margin: 1.5rem 0 0 0; }
+        #Contact li { display: flex; align-items: center; margin-bottom: 1.25rem; font-size: 1.05rem; }
+        #Contact .icon { color: var(--icon-color); }
         #Contact a { font-weight: normal; }
-
-        /* --- Extra Section --- */
-        .quote-container {
-            background-color: var(--hover-bg-color); border-left: 5px solid var(--quote-border-color);
-            padding: 1.5rem 2rem; margin: 2.5rem 0; /* More vertical margin */ border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
-        }
-        .quote-container blockquote { margin: 0 0 0.8rem 0; font-style: italic; font-size: 1.1rem; color: var(--heading-color); }
-        .quote-container cite { display: block; font-style: normal; color: var(--subtle-text-color); text-align: right; }
-        #new-quote-button {
-            display: block; margin: 1rem auto 0 auto; padding: 0.6rem 1.2rem; background-color: var(--secondary-accent); color: white; border: none; border-radius: var(--border-radius-small); cursor: pointer; transition: background-color var(--transition-speed), transform var(--transition-speed); font-weight: 500;
-        }
-        #new-quote-button:hover { background-color: #5a32a3; transform: translateY(-2px); }
-        .learning-interests { margin-top: 2.5rem; }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center; padding: 1.5rem; margin-top: 3rem; color: var(--footer-text-color);
-            font-size: 0.9em; background-color: var(--container-bg-color); border-top: 1px solid var(--border-color);
-            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-        }
-
-        /* --- Responsive Design Adjustments --- */
-
-        /* Tablets and Small Laptops (~769px to 992px) */
-        @media (max-width: 992px) {
-            .container { width: 92%; padding: 2rem; /* Reduce padding */ margin: 2rem auto; }
-            .skill-item { flex-basis: calc(50% - 0.75rem); /* 2 columns */ min-width: 160px; } /* Adjusted gap calc slightly */
-        }
-
-        /* Large Mobiles and Small Tablets (~481px to 768px) */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.5rem; }
-             .container { padding: 1.5rem; margin: 1.5rem auto; } /* Further reduce padding */
+        /* Extra Section */
+        .learning-interests { margin-top: 1rem; }
+        /* Footer */
+        footer { text-align: center; padding: 1.5rem; margin-top: 3rem; color: var(--footer-text-color); font-size: 0.9em; background-color: var(--container-bg-color); border-top: 1px solid var(--border-color); transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed); }
+        /* Responsive Design */
+         @media (max-width: 992px) { .container { width: 92%; padding: 2rem; margin: 2rem auto; } .info-item { flex-basis: calc(50% - 0.75rem); min-width: 160px; } }
+         @media (max-width: 768px) {
+             h1 { font-size: 2.2rem; } h2 { font-size: 1.6rem; }
+             .container { padding: 1.5rem; margin: 1.5rem auto; }
+             .tagline { font-size: 1rem; margin-bottom: 2rem;}
              #OverMij .profile-pic-container {
-                float: none; display: block; margin: 0 auto 1.5rem auto; max-width: 120px;
+                float: none; display: flex; /* Verzeker flexbox voor centreren */
+                align-items: center; justify-content: center; /* Centreer inhoud */
+                margin: 0 auto 1.5rem auto;
+                width: 100px; height: 100px;
             }
-             .project { padding: 1.5rem; }
-             .project h3 { flex-direction: column; align-items: flex-start; } /* Title above links */
-             .project-links { margin-left: 0; margin-top: 0.5rem; }
-             .skill-item { flex-basis: 100%; } /* 1 column */
-             .tab-button { padding: 10px 15px; font-size: 0.95rem; } /* Smaller tab buttons */
-        }
-
-        /* Small Mobiles (<= 480px) */
-        @media (max-width: 480px) {
-             html { font-size: 15px; } /* Slightly smaller base font size */
-             .container { width: 95%; padding: 1.25rem 1rem; /* Minimum padding */ margin: 1rem auto; }
-            h1 { font-size: 1.75rem; margin-bottom: 1.5rem; }
-            h2 { font-size: 1.4rem; }
-             /* Stack tabs vertically */
-             .tab-container {
-                flex-direction: column;
-                border-bottom: none;
-                margin-bottom: 1.5rem; /* Adjust margin */
-            }
-            .tab-button {
-                width: 100%; text-align: left; justify-content: flex-start; /* Align icon left */
-                border-bottom: 1px solid var(--border-color);
-                margin-bottom: 0; border-radius: 0;
-                 border-left: 3px solid transparent; /* Placeholder for active state */
-                 border-bottom-width: 1px; /* Reset bottom border thickness */
-                 padding: 12px 15px; /* Adjust padding */
-            }
-             .tab-button.active {
-                border-bottom-color: var(--border-color); /* Use regular border for bottom */
-                 border-left-color: var(--active-tab-border); /* Use left border to indicate active */
-                background-color: var(--hover-bg-color); /* Add background to active */
-                 font-weight: 600;
-             }
-             /* Clean up last button border */
-             .tab-button:last-child { border-bottom: 1px solid var(--border-color); }
-             .tab-button.active:last-child { border-bottom-color: var(--border-color); } /* Keep bottom border consistent */
-
-             /* Stack contact list vertically */
-             #Contact li { flex-direction: column; align-items: flex-start; }
-             #Contact .icon { margin-bottom: 0.3rem; /* Space below icon */ }
-
-            .project { padding: 1.25rem 1rem; } /* Reduce project padding */
-             .project-tags .tag { font-size: 0.75em; padding: 0.25em 0.6em; } /* Smaller tags */
-
-             .quote-container { padding: 1rem 1.5rem; }
-             #new-quote-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
-        }
-
+             .project { padding: 1.5rem; } .project h3 { flex-direction: column; align-items: flex-start; } .project-links { margin-left: 0; margin-top: 0.5rem; } .info-item { flex-basis: 100%; } .tab-button { padding: 10px 15px; font-size: 0.95rem; } }
+         @media (max-width: 480px) { html { font-size: 15px; } .container { width: 95%; padding: 1.25rem 1rem; margin: 1rem auto; } h1 { font-size: 2rem; margin-bottom: 0.25rem;} h2 { font-size: 1.4rem; } .tagline { font-size: 0.9rem; margin-bottom: 1.5rem; } .tab-container { flex-direction: column; border-bottom: none; margin-bottom: 1.5rem; } .tab-button { width: 100%; text-align: left; justify-content: flex-start; border-bottom: 1px solid var(--border-color); margin-bottom: 0; border-radius: 0; border-left: 3px solid transparent; border-bottom-width: 1px; padding: 12px 15px; } .tab-button.active { border-bottom-color: var(--border-color); border-left-color: var(--active-tab-border); background-color: var(--hover-bg-color); font-weight: 600; } .tab-button:last-child { border-bottom: 1px solid var(--border-color); } .tab-button.active:last-child { border-bottom-color: var(--border-color); } #Contact ul { margin-top: 1rem; } #Contact li { flex-direction: column; align-items: flex-start; } #Contact .icon { margin-bottom: 0.3rem; } .project { padding: 1.25rem 1rem; } .project-tags .tag { font-size: 0.75em; padding: 0.25em 0.6em; } .info-item { padding: 0.6rem 1rem; } }
     </style>
 </head>
 <body>
-    <!-- Inline SVG Icons Definition (Keep as is) -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></symbol>
-        <symbol id="icon-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></symbol>
-        <symbol id="icon-design" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></symbol> <!-- Swapped design icon for more general purpose one -->
-        <symbol id="icon-soft-skills" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></symbol>
-        <symbol id="icon-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></symbol>
-        <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></symbol>
-        <symbol id="icon-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></symbol>
-        <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol>
-        <symbol id="icon-code-alt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.7 17.7l-2.4-2.4a1 1 0 0 1 0-1.4l2.4-2.4a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4l-1.6 1.6a1 1 0 0 1-1.4 0zM15.7 14.7l-1.6-1.6a1 1 0 0 1 0-1.4l1.6-1.6a1 1 0 0 1 1.4 0l2.4 2.4a1 1 0 0 1 0 1.4l-2.4 2.4a1 1 0 0 1-1.4 0z"></path><circle cx="12" cy="12" r="10"></circle></symbol>
-        <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></symbol> <!-- Extra Icon for "Extras" tab -->
-
-    </svg>
+    <!-- Inline SVG Icons Definition -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"> <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></symbol> <symbol id="icon-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></symbol> <symbol id="icon-design" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></symbol> <symbol id="icon-soft-skills" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></symbol> <symbol id="icon-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></symbol> <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></symbol> <symbol id="icon-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></symbol> <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol> <symbol id="icon-code-alt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.7 17.7l-2.4-2.4a1 1 0 0 1 0-1.4l2.4-2.4a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4l-1.6 1.6a1 1 0 0 1-1.4 0zM15.7 14.7l-1.6-1.6a1 1 0 0 1 0-1.4l1.6-1.6a1 1 0 0 1 1.4 0l2.4 2.4a1 1 0 0 1 0 1.4l-2.4 2.4a1 1 0 0 1-1.4 0z"></path><circle cx="12" cy="12" r="10"></circle></symbol> <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></symbol> <symbol id="icon-certificate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline><path d="M11.998 17l-2.552 1.205a.5.5 0 0 1-.743-.533l.47-2.79-1.996-1.996a.5.5 0 0 1 .276-.848l2.773-.412L11.5 12.5a.5.5 0 0 1 .996 0l1.23 2.535 2.773.412a.5.5 0 0 1 .276.848l-1.996 1.996.47 2.79a.5.5 0 0 1-.743.533L11.998 17z"></path></symbol> <symbol id="icon-translate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6V4M8 10H6M18 10h-2m-2-4V4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 18l-1-3h8l-1 3m-8-6a3 3 0 1 1 6 0M8 6h8M9.5 12a1 1 0 1 0 0 2h5a1 1 0 1 0 0-2h-5z"></path></symbol> <symbol id="icon-iot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 10a2.5 2.5 0 0 1 5 0V11a4.5 4.5 0 1 1-9 0v-.5A2.5 2.5 0 0 1 7 8h0a2.5 2.5 0 0 1 2.5 2.5V10Zm5 0V9a2.5 2.5 0 0 1 5 0v.5A2.5 2.5 0 0 1 16 12h0a2.5 2.5 0 0 1 2.5 2.5V15a2.5 2.5 0 0 1-5 0v-.5a2.5 2.5 0 0 1-1-2H10.5a2.5 2.5 0 0 1-1-2V10Z"/><path d="M8.83 7A6.01 6.01 0 0 0 12 5c1.61 0 3.1.63 4.24 1.76"/><path d="M6.7 4.5a9 9 0 0 1 10.6 0"/><path d="M14.17 17A6.01 6.01 0 0 0 12 19c-1.61 0-3.1-.63-4.24-1.76"/><path d="M17.3 19.5a9 9 0 0 0-10.6 0"/></symbol> <symbol id="icon-office" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></symbol> </svg>
 
     <div class="container">
         <header>
-            <h1>[Jouw Naam]</h1>
-            <p style="text-align: center; margin-top: -1.5rem; margin-bottom: 2.5rem;" class="subtle">[Jouw Functie / Specialiteit] | Gepassioneerd door [Iets specifieks]</p>
+            <h1>Daniel Van Dessel</h1>
+            <p class="tagline">Internet of Things Student | Electronics & Embedded Systems Enthusiast</p>
         </header>
 
         <main>
             <!-- Tab Knoppen -->
             <div class="tab-container">
-                <button class="tab-button active" onclick="openTab(event, 'OverMij')" id="defaultOpen">
-                    <svg class="icon"><use xlink:href="#icon-soft-skills"/></svg>Over Mij
-                </button>
-                <button class="tab-button" onclick="openTab(event, 'Projecten')">
-                    <svg class="icon"><use xlink:href="#icon-code"/></svg>Projecten
-                </button>
-                 <button class="tab-button" onclick="openTab(event, 'Extra')">
-                    <svg class="icon"><use xlink:href="#icon-star"/></svg>Extra's <!-- Changed Icon -->
-                 </button>
-                <button class="tab-button" onclick="openTab(event, 'Contact')">
-                    <svg class="icon"><use xlink:href="#icon-email"/></svg>Contact
-                </button>
+                <button class="tab-button active" onclick="openTab(event, 'OverMij')" id="defaultOpen"><svg class="icon"><use xlink:href="#icon-soft-skills"/></svg>Over Mij</button>
+                <button class="tab-button" onclick="openTab(event, 'Projecten')"><svg class="icon"><use xlink:href="#icon-code"/></svg>Projecten</button>
+                <button class="tab-button" onclick="openTab(event, 'Extra')"><svg class="icon"><use xlink:href="#icon-star"/></svg>Extra's</button>
+                <button class="tab-button" onclick="openTab(event, 'Contact')"><svg class="icon"><use xlink:href="#icon-email"/></svg>Contact</button>
             </div>
-
-             <!-- TAB CONTENT (HTML is hetzelfde, CSS regelt de responsive weergave) -->
 
             <!-- === TAB: OVER MIJ === -->
             <div id="OverMij" class="tab-content" style="display: block;">
                 <div class="about-intro">
                     <h2>Introductie</h2>
                     <div class="profile-pic-container">
-                        <!-- <img src="profile.jpg" alt="Profielfoto van [Jouw Naam]" loading="lazy"> -->
-                         <div style="width:100%; height:0; padding-bottom: 100%; position: relative; background: var(--hover-bg-color); border-radius: 50%;"> <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size:0.8em; color: var(--subtle-text-color); text-align:center;">(Foto)</span></div> <!-- Placeholder maintains aspect ratio -->
+                         <svg viewBox="0 0 24 24"><use xlink:href="#icon-soft-skills"/></svg> <!-- Icon aangepast -->
+                         <!-- Vervang bovenstaande SVG door <img src="jouw-foto.jpg" alt="Foto Daniel Van Dessel"> -->
                     </div>
-                    <p>Hallo! Ik ben <strong>[Jouw Naam]</strong>, een [Jouw Functie/Rol] gevestigd in [Jouw Locatie, bijv. Nederland]. Met een sterke interesse in [Specifiek gebied 1] en [Specifiek gebied 2], focus ik me op het creëren van [Soort resultaat].</p>
-                    <p>[Voeg hier een paragraaf toe die iets meer persoonlijkheid toont. Wat drijft je?]</p>
-                    <p>[Eventueel een 3e paragraaf over je ervaring, belangrijkste prestatie, of specifieke ambitie.]</p>
+                    <p>Hallo! Ik ben <strong>Daniel Van Dessel</strong>, een <span id="age-display">...</span> jaar oude, gemotiveerde en hands-on student <strong>Graduaat Internet of Things</strong> aan de AP Hogeschool in Antwerpen, België (Sept 2023 - verwacht Dec 2025). Ik heb een sterke passie voor elektronica, embedded systems en het ontwikkelen van slimme, geconnecteerde oplossingen.</p>
+                    <p>Tijdens mijn lopende studie verdiep ik me in technologieën zoals ESP32 (zowel met de Arduino omgeving als het ESP-IDF framework), Raspberry Pi, en smart building standaarden zoals Loxone en KNX. Mijn focus ligt op het realiseren van innovatieve en veilige IoT-projecten.</p>
+                    <p>Ik ben leergierig, praktisch ingesteld en op zoek naar een stage of andere interessante opportuniteit waar ik mijn academische kennis kan toepassen in real-life projecten en verder kan groeien in het IoT-domein.</p>
                 </div>
 
-                <div class="skills-section">
-                     <h2>Mijn Skills</h2>
-                     <div class="skills-category">
-                        <h4><svg class="icon"><use xlink:href="#icon-code-alt"/></svg>Frontend Development</h4>
-                        <ul class="skills-list">
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>HTML5</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>CSS3 / SCSS</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>JavaScript (ES6+)</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>[Framework]</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>Responsive Design</span></li>
-                        </ul>
-                    </div>
-                     <div class="skills-category">
-                        <h4><svg class="icon"><use xlink:href="#icon-code"/></svg>Backend / Overig</h4>
-                        <ul class="skills-list">
-                             <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code"/></svg><span>[Taal/Framework]</span></li>
-                             <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code"/></svg><span>[Database]</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-code"/></svg><span>API Design (REST)</span></li>
-                        </ul>
-                    </div>
-                     <div class="skills-category">
-                        <h4><svg class="icon"><use xlink:href="#icon-tools"/></svg>Tools & Platformen</h4>
-                        <ul class="skills-list">
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-github"/></svg><span>Git / GitHub</span></li>
-                            <li class="skill-item"><svg class="icon"><use xlink:href="#icon-tools"/></svg><span>[Tool, e.g., Docker]</span></li>
-                             <li class="skill-item"><svg class="icon"><use xlink:href="#icon-tools"/></svg><span>[Tool, e.g., Figma]</span></li>
-                        </ul>
+                 <div class="info-section">
+                     <h2>Vaardigheden & Kennis</h2>
+                     <div class="info-category">
+                         <h4><svg class="icon"><use xlink:href="#icon-code"/></svg>Technische Skills</h4>
+                         <ul class="info-list">
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>C++</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-code-alt"/></svg><span>Python</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-iot"/></svg><span>ESP32 (Arduino & ESP-IDF)</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-iot"/></svg><span>Raspberry Pi</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-design"/></svg><span>Loxone / KNX</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-tools"/></svg><span>Microsoft Azure</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-office"/></svg><span>MS Office (Word, Excel, PP)</span></li>
+                         </ul>
+                     </div>
+                      <div class="info-category">
+                         <h4><svg class="icon"><use xlink:href="#icon-certificate"/></svg>Certificaten</h4>
+                        <div class="certificate-item"><p><strong>VCA VOL</strong> – Veiligheid voor Operationeel Leidinggevenden</p></div>
+                         <div class="certificate-item"><p><strong>KNX Basistraining</strong> – Gecertificeerde kennis van de KNX-standaard</p></div>
+                     </div>
+                     <div class="info-category">
+                         <h4><svg class="icon"><use xlink:href="#icon-translate"/></svg>Talen</h4>
+                         <ul class="info-list">
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-translate"/></svg><span>Nederlands (C2 - Moedertaal)</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-translate"/></svg><span>Engels (C1 - Vloeiend)</span></li>
+                            <li class="info-item"><svg class="icon"><use xlink:href="#icon-translate"/></svg><span>Russisch (C1 - Vloeiend)</span></li>
+                         </ul>
                     </div>
                  </div>
             </div>
@@ -396,68 +184,47 @@
             <!-- === TAB: PROJECTEN === -->
             <div id="Projecten" class="tab-content">
                  <h2>Projecten</h2>
-                 <p class="subtle">Een selectie van werk waar ik aan heb bijgedragen of zelf heb ontwikkeld.</p>
+                 <p class="subtle">Mijn voornaamste project is momenteel mijn eindwerk.</p>
+
                  <div class="project">
-                     <!-- <img src="project1.jpg" alt="Screenshot Project 1" loading="lazy"> -->
-                     <div style="width:100%; height:0; padding-bottom: 56.25%; position: relative; background: var(--hover-bg-color); border-radius: var(--border-radius-small); margin-bottom: 1.5rem;"><span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size:0.8em; color: var(--subtle-text-color); text-align:center;">(Project Afbeelding 16:9)</span></div> <!-- Placeholder with 16:9 aspect ratio -->
-                    <h3>Project Titel 1
-                         <div class="project-links">
-                              <!-- <a href="[Link]" target="_blank" rel="noopener noreferrer" title="Live Demo"><svg class="icon"><use xlink:href="#icon-link"/></svg></a> -->
-                              <!-- <a href="[Link]" target="_blank" rel="noopener noreferrer" title="Bekijk Code"><svg class="icon"><use xlink:href="#icon-github"/></svg></a> -->
-                         </div>
-                    </h3>
-                    <p>[Beschrijving project 1...]</p>
-                    <div class="project-tags"><span class="tag">[Tech 1]</span><span class="tag">[Tech 2]</span><span class="tag">[Tech 3]</span></div>
-                </div>
-                <div class="project">
-                     <!-- <img src="project2.jpg" alt="Screenshot Project 2" loading="lazy"> -->
-                      <div style="width:100%; height:0; padding-bottom: 56.25%; position: relative; background: var(--hover-bg-color); border-radius: var(--border-radius-small); margin-bottom: 1.5rem;"><span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size:0.8em; color: var(--subtle-text-color); text-align:center;">(Project Afbeelding 16:9)</span></div>
-                    <h3>Project Titel 2
-                        <div class="project-links">
-                             <!-- <a href="[Link]" target="_blank" rel="noopener noreferrer" title="Live Demo"><svg class="icon"><use xlink:href="#icon-link"/></svg></a> -->
-                         </div>
-                    </h3>
-                    <p>[Beschrijving Project 2]</p>
-                     <div class="project-tags"><span class="tag">[Tech A]</span><span class="tag">[Tech B]</span></div>
-                </div>
+                    <div class="project-placeholder"><span>Architectuur Diagram Placeholder (zie PDF)</span></div>
+                    <h3>Eindproject: Sensorio - Enhanced Security Edition</h3>
+                    <p>Dit Graduaatsproject transformeert een basis IoT-monitoringsysteem naar een <strong>robuust beveiligd platform</strong>. Het doel is niet alleen omgevingsdata (zoals luchtkwaliteit via CO2-sensoren) te meten, maar ook om robuuste <strong>fysieke beveiliging</strong> en <strong>manipulatiedetectie</strong> te integreren voor het apparaat zelf.</p>
+                    <p>Belangrijke vernieuwingen omvatten de strategische keuze voor het <strong>ESP-IDF framework</strong> (i.p.v. de standaard Arduino core voor ESP32) vanwege de toegang tot geavanceerde security features zoals <strong>Secure Boot V2</strong> en <strong>Flash Encryption</strong>. Dit beschermt de firmware en gevoelige data (zoals mTLS keys en RFID tags) tegen uitlezen en modificatie, zelfs bij fysieke toegang tot de hardware.</p>
+                    <p>Communicatie gebeurt via MQTT over een directe <strong>end-to-end mTLS verbinding</strong> tussen de ESP32 en de Mosquitto broker, wat zorgt voor encryptie én wederzijdse authenticatie. Verder omvat het project <strong>fysieke toegangscontrole</strong> (RFID lezer, elektromagnetisch slot), geavanceerde <strong>tampering detectie</strong> (IMU, afstandssensor) en <strong>actieve alarmfuncties</strong> (lokale speaker, Discord webhook notificaties).</p>
+                    <div class="project-tags"> <span class="tag">IoT Security</span><span class="tag">Embedded Systems</span> <span class="tag">ESP32</span><span class="tag">ESP-IDF</span> <span class="tag">mTLS</span><span class="tag">MQTT</span> <span class="tag">Secure Boot</span><span class="tag">Flash Encryption</span> <span class="tag">RFID</span><span class="tag">IMU</span> <span class="tag">Tamper Detection</span><span class="tag">Docker</span> </div>
+                 </div>
+                 <!-- Voeg hier eventueel andere (kleinere) projecten toe -->
             </div>
 
-             <!-- === TAB: EXTRA'S === -->
+            <!-- === TAB: EXTRA'S === -->
              <div id="Extra" class="tab-content">
                  <h2>Extra's</h2>
-                 <div class="quote-container">
-                    <blockquote><p id="quote-text">Laden...</p></blockquote>
-                    <cite id="quote-author"></cite>
-                    <button id="new-quote-button">Nieuwe Quote</button>
-                 </div>
                  <div class="learning-interests">
-                    <h3>Wat ik nu leer / Interesses</h3>
-                    <p>Ik ben altijd bezig mezelf te ontwikkelen. Momenteel verdiep ik me in:</p>
-                    <ul>
-                         <li>[Technologie/Concept 1]</li> <li>[Technologie/Concept 2]</li> <li>[Interessegebied]</li>
-                     </ul>
-                     <p>Buiten het coderen hou ik me graag bezig met [Hobby 1] en [Hobby 2].</p>
+                     <h3>Interesses & Ambities</h3>
+                     <p>Ik heb een grote en actieve interesse in de nieuwste ontwikkelingen binnen <strong>moderne elektronica en technologie</strong>, specifiek in het Internet of Things domein. Ik volg de trends op de voet en experimenteer graag met nieuwe hardware en software om mijn kennis uit te breiden.</p>
+                     <p>Mijn ambitie is om mijn vaardigheden verder te ontwikkelen en toe te passen in een professionele omgeving. Ik ben momenteel actief op zoek naar een uitdagende <strong>stageplaats</strong> waar ik kan bijdragen aan innovatieve projecten en praktische ervaring kan opdoen.</p>
                  </div>
+                 <!-- Quote container en Hobby paragraaf verwijderd -->
             </div>
 
-             <!-- === TAB: CONTACT === -->
+            <!-- === TAB: CONTACT === -->
             <div id="Contact" class="tab-content">
-                <h2>Neem Contact Op</h2>
-                <p>Geïnteresseerd om samen te werken of gewoon een praatje maken? Stuur me een bericht!</p>
-                <ul>
-                    <li><svg class="icon large"><use xlink:href="#icon-email"/></svg><a href="mailto:[Jouw Emailadres]">[Jouw Emailadres]</a></li>
-                    <li><svg class="icon large"><use xlink:href="#icon-linkedin"/></svg><a href="[Link LinkedIn]" target="_blank" rel="noopener noreferrer">[Jouw LinkedIn]</a></li>
-                    <li><svg class="icon large"><use xlink:href="#icon-github"/></svg><a href="[Link GitHub]" target="_blank" rel="noopener noreferrer">[Jouw GitHub]</a></li>
-                </ul>
-                <p style="margin-top: 2rem;"><a href="mailto:[Jouw Emailadres]" class="button-link"><svg class="icon"><use xlink:href="#icon-email"/></svg>Stuur me een e-mail</a></p>
+                 <h2>Neem Contact Op</h2>
+                 <p>Interesse in een samenwerking, een stageplaats, of gewoon een vraag? Aarzel niet om contact op te nemen!</p>
+                 <ul>
+                     <li><svg class="icon large"><use xlink:href="#icon-email"/></svg><a href="mailto:daniel6592001@gmail.com">daniel6592001@gmail.com</a></li>
+                     <li><svg class="icon large"><use xlink:href="#icon-linkedin"/></svg><a href="[Link naar jouw LinkedIn profiel]" target="_blank" rel="noopener noreferrer">[Voeg hier je LinkedIn profiel link toe]</a></li>
+                     <li><svg class="icon large"><use xlink:href="#icon-github"/></svg><a href="[Link naar jouw GitHub profiel]" target="_blank" rel="noopener noreferrer">[Voeg hier je GitHub profiel link toe]</a></li>
+                 </ul>
+                 <!-- Mail knop paragraaf verwijderd -->
             </div>
-
         </main>
 
     </div><!-- End Container -->
 
     <footer>
-        &copy; <span id="year"></span> [Jouw Naam]. Met <span style="color: var(--primary-color); font-size: 1.2em;">❤</span> gemaakt.
+         &copy; <span id="year"></span> Daniel Van Dessel. <!-- Aangepaste tekst -->
     </footer>
 
     <script>
@@ -471,22 +238,53 @@
             const targetTab = document.getElementById(tabName);
             if(targetTab) { targetTab.style.display = "block"; }
             if(evt && evt.currentTarget) { evt.currentTarget.className += " active"; }
+            else { const activeButton = document.querySelector(`.tab-button[onclick*="'${tabName}'"]`); if(activeButton) activeButton.className += " active"; }
         }
+
         // --- Dynamisch Jaar in Footer ---
         document.getElementById("year").textContent = new Date().getFullYear();
-        // --- Willekeurige Quote Generator ---
-        const quotes = [ { text: "Programmeren is denken, niet typen.", author: "Casey Patton" }, { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" }, { text: "Eerst, los het probleem op. Dan, schrijf de code.", author: "John Johnson" }, { text: "Ervaring is de naam die iedereen aan zijn fouten geeft.", author: "Oscar Wilde"}, { text: "Kennis is macht.", author: "Francis Bacon" }, { text: "The best way to predict the future is to invent it.", author: "Alan Kay"}, { text: "Design is how it works.", author: "Steve Jobs" }, { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" }, { text: "Programs must be written for people to read...", author: "Harold Abelson"}, { text: "It’s not a bug – it’s an undocumented feature.", author: "Anonymous"}, { text: "[Voeg je eigen quote toe!]", author: "[Jouw Naam?]"} ];
-        const quoteTextElement = document.getElementById('quote-text');
-        const quoteAuthorElement = document.getElementById('quote-author');
-        const newQuoteButton = document.getElementById('new-quote-button');
-        function displayRandomQuote() {
-            if (quoteTextElement && quoteAuthorElement) {
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                quoteTextElement.textContent = `“${quotes[randomIndex].text}”`; quoteAuthorElement.textContent = `— ${quotes[randomIndex].author}`;
-            }
+
+        // --- Bereken Leeftijd ---
+        function calculateAge(birthDateString) {
+            try {
+                const parts = birthDateString.split('/');
+                if (parts.length !== 3) return "...";
+                const birthDay = parseInt(parts[0], 10);
+                const birthMonth = parseInt(parts[1], 10) - 1;
+                const birthYear = parseInt(parts[2], 10);
+                if (isNaN(birthDay) || isNaN(birthMonth) || isNaN(birthYear)) return "...";
+                const today = new Date();
+                const birthDate = new Date(birthYear, birthMonth, birthDay);
+                if (isNaN(birthDate.getTime())) return "...";
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
+                return age >= 0 ? age : "...";
+            } catch (e) { console.error("Error calculating age:", e); return "..."; }
         }
-        if (newQuoteButton) { newQuoteButton.addEventListener('click', displayRandomQuote); }
-        document.addEventListener('DOMContentLoaded', displayRandomQuote);
+
+        // --- Voer functies uit na laden DOM ---
+        document.addEventListener('DOMContentLoaded', () => {
+             const dob = "25/08/2001";
+             const ageElement = document.getElementById('age-display');
+             if (ageElement) {
+                 const calculatedAge = calculateAge(dob);
+                 ageElement.textContent = calculatedAge + (calculatedAge === 1 ? " jaar" : " jaar"); // Use Dutch pluralization
+             }
+
+             // Default tab logica (nodig voor zekerheid)
+             const defaultOpenButton = document.getElementById('defaultOpen');
+             const isAnyTabVisible = document.querySelector('.tab-content[style*="display: block"]') !== null;
+             if (defaultOpenButton && !isAnyTabVisible) {
+                openTab(null, 'OverMij');
+             } else if(defaultOpenButton && isAnyTabVisible) {
+                 const visibleTabId = document.querySelector('.tab-content[style*="display: block"]').id;
+                 const activeButton = document.querySelector(`.tab-button[onclick*="'${visibleTabId}'"]`);
+                 const tablinks = document.getElementsByClassName("tab-button");
+                 for (let i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+                 if (activeButton) activeButton.className += " active"; else defaultOpenButton.className += " active";
+             }
+        });
     </script>
 </body>
 </html>
