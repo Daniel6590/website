@@ -13,7 +13,6 @@ function openTab(evt, tabName) {
     if (targetTab) {
         targetTab.style.display = "block";
     }
-    // Make button active
     if (evt && evt.currentTarget) {
         evt.currentTarget.className += " active";
     } else {
@@ -44,9 +43,14 @@ function calculateAge(birthDateString) {
         if (isNaN(birthDate.getTime())) return "...";
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) { age--; }
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
         return age >= 0 ? age : "...";
-    } catch (e) { console.error("Error calculating age:", e); return "..."; }
+    } catch (e) {
+        console.error("Error calculating age:", e);
+        return "...";
+    }
 }
 
 // --- Slideshow Functionaliteit ---
@@ -57,92 +61,129 @@ function initializeSlideshows() {
     containers.forEach((container, index) => {
         const slideshowId = `slideshow-${index}`;
         container.dataset.slideshowId = slideshowId;
-        const slides = container.querySelectorAll('.project-slide');
+        const slides = Array.from(container.querySelectorAll('img.project-slide'));
         const placeholder = container.querySelector('.slideshow-placeholder');
         const prevButton = container.querySelector('.prev');
         const nextButton = container.querySelector('.next');
 
-        if (slides.length > 0) {
-            // Controleer of afbeeldingen daadwerkelijk laden
-            let loadedImages = 0;
-            let failedImages = 0;
-            slides.forEach(slide => {
-                // Trick om te checken of image geladen is (kan onbetrouwbaar zijn)
-                if (slide.complete && slide.naturalHeight !== 0) {
-                    loadedImages++;
-                } else {
-                    // Luister naar load/error events als ze nog niet compleet zijn
-                    slide.onload = () => { loadedImages++; checkSlideshowState(slideshowId, placeholder, prevButton, nextButton); };
-                    slide.onerror = () => { failedImages++; slide.style.display = 'none'; checkSlideshowState(slideshowId, placeholder, prevButton, nextButton); };
-                }
-            });
+        slideshows[slideshowId] = {
+            slides: slides,
+            currentIndex: 0,
+            container: container,
+            placeholder: placeholder,
+            prevButton: prevButton,
+            nextButton: nextButton,
+            initialCheckDone: false
+        };
 
-            // Initialiseer slideshow staat
-             slideshows[slideshowId] = {
-                 slides: Array.from(slides).filter(s => s.style.display !== 'none'), // Filter out failed images initially
-                 currentIndex: 0,
-                 container: container
-             };
-             checkSlideshowState(slideshowId, placeholder, prevButton, nextButton); // Check state after initial setup
-
-             // Voeg hover listeners toe
-             container.addEventListener('mousemove', handleMouseMove);
-             container.addEventListener('mouseleave', handleMouseLeave);
-
-        } else {
-            // Geen img tags gevonden
-             if (placeholder) placeholder.style.display = 'flex';
-             if (prevButton) prevButton.style.display = 'none';
-             if (nextButton) nextButton.style.display = 'none';
+        if (slides.length === 0) {
+            checkSlideshowState(slideshowId); // Toon placeholder
+            return;
         }
+
+        let imagesToCheck = slides.length;
+        const onImageLoadOrError = () => {
+            imagesToCheck--;
+            // Wacht tot alle afbeeldingen status hebben voor de eerste check
+            if (imagesToCheck === 0 && !slideshows[slideshowId].initialCheckDone) {
+                 checkSlideshowState(slideshowId);
+                 slideshows[slideshowId].initialCheckDone = true;
+            }
+        };
+
+        // Altijd listeners toevoegen (nu 'loading=lazy' weg is)
+        slides.forEach(slide => {
+            slide.addEventListener('load', onImageLoadOrError, { once: true });
+            slide.addEventListener('error', onImageLoadOrError, { once: true });
+            // Backup check voor reeds complete (gecachete) afbeeldingen
+            if (slide.complete) {
+                 // Roep direct aan, maar iets vertraagd om race condities te minimaliseren
+                 setTimeout(() => onImageLoadOrError({ type: 'manual_complete_check', target: slide }), 0);
+            }
+        });
+
+        container.addEventListener('mousemove', handleMouseMove);
+        container.addEventListener('mouseleave', handleMouseLeave);
     });
 }
 
-function checkSlideshowState(slideshowId, placeholder, prevButton, nextButton) {
+function checkSlideshowState(slideshowId) {
     const slideshow = slideshows[slideshowId];
-    // Update de lijst met bruikbare slides
-    slideshow.slides = Array.from(slideshow.container.querySelectorAll('.project-slide')).filter(s => s.style.display !== 'none');
+    if (!slideshow) return;
 
-    if (slideshow.slides.length > 0) {
+    const { slides, placeholder, prevButton, nextButton } = slideshow;
+
+    // Filter op basis van de display style gezet door HTML onerror
+    const validSlides = slides.filter(s => s.style.display !== 'none');
+
+    if (validSlides.length > 0) {
         if (placeholder) placeholder.style.display = 'none';
         if (prevButton) prevButton.style.display = 'block';
         if (nextButton) nextButton.style.display = 'block';
-         // Zorg dat de eerste *geldige* slide getoond wordt
-         slideshow.currentIndex = Math.min(slideshow.currentIndex, slideshow.slides.length - 1); // Clamp index
-         if (slideshow.currentIndex < 0) slideshow.currentIndex = 0; // Minstens 0
-         slideshow.slides.forEach((slide, i) => { // Verberg alle slides
-             slide.classList.remove('active-slide');
-             slide.style.objectPosition = 'center center'; // Reset pan
-         });
-         if(slideshow.slides[slideshow.currentIndex]) { // Toon de (nieuwe) huidige slide
-            slideshow.slides[slideshow.currentIndex].classList.add('active-slide');
-         }
+
+        let potentialCurrentSlide = slides[slideshow.currentIndex];
+        let currentSlideIsValid = potentialCurrentSlide && potentialCurrentSlide.style.display !== 'none';
+
+        if (!currentSlideIsValid) {
+            slideshow.currentIndex = slides.findIndex(s => s.style.display !== 'none');
+             if (slideshow.currentIndex === -1) { // Geen geldige slides over
+                 showPlaceholder(slideshow);
+                 return;
+             }
+             potentialCurrentSlide = slides[slideshow.currentIndex];
+        }
+
+        slides.forEach(s => s.classList.remove('active-slide')); // Reset alle
+        potentialCurrentSlide.classList.add('active-slide'); // Activeer de juiste
+        potentialCurrentSlide.style.objectPosition = 'center center';
 
     } else {
-         // Geen geldige slides meer
-         if (placeholder) placeholder.style.display = 'flex';
-         if (prevButton) prevButton.style.display = 'none';
-         if (nextButton) nextButton.style.display = 'none';
+        showPlaceholder(slideshow);
     }
 }
 
+function showPlaceholder(slideshow) {
+     if (slideshow.placeholder) slideshow.placeholder.style.display = 'flex';
+     if (slideshow.prevButton) slideshow.prevButton.style.display = 'none';
+     if (slideshow.nextButton) slideshow.nextButton.style.display = 'none';
+     slideshow.slides.forEach(s => s.classList.remove('active-slide'));
+}
 
 function changeSlide(delta, buttonElement) {
     const container = buttonElement?.closest('.slideshow-container');
     if (!container) return;
     const slideshowId = container.dataset.slideshowId;
     const slideshow = slideshows[slideshowId];
-    if (!slideshow || slideshow.slides.length === 0) return;
 
-    slideshow.slides[slideshow.currentIndex].style.objectPosition = 'center center'; // Reset pan
-    slideshow.slides[slideshow.currentIndex].classList.remove('active-slide');
+    const validSlides = slideshow.slides.filter(s => s.style.display !== 'none');
+    if (!slideshow || validSlides.length <= 1) return;
 
-    let newIndex = slideshow.currentIndex + delta;
-    if (newIndex >= slideshow.slides.length) newIndex = 0;
-    else if (newIndex < 0) newIndex = slideshow.slides.length - 1;
+    const currentSlide = slideshow.slides[slideshow.currentIndex];
+    let currentValidIndex = validSlides.findIndex(s => s === currentSlide);
 
-    slideshow.slides[newIndex].classList.add('active-slide');
-    slideshow.currentIndex = newIndex;
+    if (currentValidIndex === -1) {
+        currentValidIndex = 0;
+        slideshow.currentIndex = slideshow.slides.indexOf(validSlides[0]);
+        if(currentSlide) currentSlide.classList.remove('active-slide');
+    }
+
+    let nextValidIndex = currentValidIndex + delta;
+    if (nextValidIndex >= validSlides.length) nextValidIndex = 0;
+    else if (nextValidIndex < 0) nextValidIndex = validSlides.length - 1;
+
+    const nextSlide = validSlides[nextValidIndex];
+    slideshow.currentIndex = slideshow.slides.indexOf(nextSlide);
+
+     if (currentSlide && currentSlide !== nextSlide) {
+        currentSlide.classList.remove('active-slide');
+        currentSlide.style.objectPosition = 'center center';
+    }
+
+    if (nextSlide) {
+        nextSlide.classList.add('active-slide');
+    } else {
+         checkSlideshowState(slideshowId); // Probeer te herstellen
+    }
 }
 
 function handleMouseMove(event) {
@@ -150,8 +191,8 @@ function handleMouseMove(event) {
     const slideshowId = container.dataset.slideshowId;
     const slideshow = slideshows[slideshowId];
     if (!slideshow || slideshow.slides.length === 0) return;
-    const activeSlide = slideshow.slides[slideshow.currentIndex];
-    if (!activeSlide) return;
+    const activeSlide = slideshow.container.querySelector('.project-slide.active-slide');
+    if (!activeSlide || activeSlide.style.display === 'none') return;
 
     const rect = container.getBoundingClientRect();
     const mouseY = event.clientY - rect.top;
@@ -165,13 +206,73 @@ function handleMouseLeave(event) {
     const slideshowId = container.dataset.slideshowId;
     const slideshow = slideshows[slideshowId];
     if (!slideshow || slideshow.slides.length === 0) return;
-    const activeSlide = slideshow.slides[slideshow.currentIndex];
-    if (!activeSlide) return;
+    const activeSlide = slideshow.container.querySelector('.project-slide.active-slide');
+    if (!activeSlide || activeSlide.style.display === 'none') return;
     activeSlide.style.objectPosition = 'center center';
+}
+
+
+// --- Theme Toggle Functionality ---
+const themeToggleButton = document.getElementById('theme-toggle');
+const themeToggleIcon = document.getElementById('theme-toggle-icon');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+const htmlElement = document.documentElement;
+
+function applyTheme(theme, source = 'manual') {
+    htmlElement.removeAttribute('data-theme');
+    htmlElement.classList.remove('dark-mode-preferred');
+
+    if (theme === 'dark') {
+        if (source === 'manual') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            htmlElement.classList.add('dark-mode-preferred');
+            localStorage.removeItem('theme');
+        }
+        if (themeToggleIcon) themeToggleIcon.setAttribute('xlink:href', '#icon-sun');
+        if (themeToggleButton) themeToggleButton.setAttribute('aria-label', 'Switch to light mode');
+
+    } else { // theme === 'light'
+        if (source === 'manual') {
+            htmlElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+             localStorage.removeItem('theme');
+        }
+        if (themeToggleIcon) themeToggleIcon.setAttribute('xlink:href', '#icon-moon');
+        if (themeToggleButton) themeToggleButton.setAttribute('aria-label', 'Switch to dark mode');
+    }
+}
+
+// --- Initial Theme Application ---
+(function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        applyTheme(savedTheme, 'manual');
+    } else if (prefersDarkScheme.matches) {
+        applyTheme('dark', 'system');
+    } else {
+        applyTheme('light', 'system');
+    }
+})();
+
+// --- Event Listener Functions ---
+function handleThemeButtonClick() {
+    const isCurrentlyDark = htmlElement.matches("[data-theme='dark']") || htmlElement.classList.contains('dark-mode-preferred');
+    const newTheme = isCurrentlyDark ? 'light' : 'dark';
+    applyTheme(newTheme, 'manual');
+}
+
+function handleSystemThemeChange(e) {
+    if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light', 'system');
+    }
 }
 
 // --- Voer functies uit na laden DOM ---
 document.addEventListener('DOMContentLoaded', () => {
+    // Initial Setup Functions
     setFooterYear();
 
     const dob = "25/08/2001";
@@ -181,12 +282,51 @@ document.addEventListener('DOMContentLoaded', () => {
         ageElement.textContent = calculatedAge + (calculatedAge === 1 ? " jaar" : " jaar");
     }
 
-    initializeSlideshows(); // Initialiseer slideshows
+    initializeSlideshows();
 
-    // Default tab logica
+    // Default Tab Logic
     const defaultOpenButton = document.getElementById('defaultOpen');
-    const isAnyTabVisible = document.querySelector('.tab-content[style*="display: block"]') !== null;
-    if (defaultOpenButton && !isAnyTabVisible) { openTab(null, 'OverMij'); if(!defaultOpenButton.classList.contains('active')){ defaultOpenButton.className += " active"; } }
-    else if(defaultOpenButton && isAnyTabVisible) { const visibleTabId = document.querySelector('.tab-content[style*="display: block"]').id; const activeButton = document.querySelector(`.tab-button[onclick*="'${visibleTabId}'"]`); const tablinks = document.getElementsByClassName("tab-button"); for (let i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); } if (activeButton) activeButton.className += " active"; else if(!defaultOpenButton.classList.contains('active')) { defaultOpenButton.className += " active"; } }
-    else if (defaultOpenButton && !defaultOpenButton.classList.contains('active')){ defaultOpenButton.className += " active";}
-});
+    const tabContents = document.querySelectorAll('.tab-content');
+    let isAnyTabVisible = false;
+    tabContents.forEach(tab => {
+        if (tab.style.display === 'block') {
+            isAnyTabVisible = true;
+            const tabId = tab.id;
+            const activeButton = document.querySelector(`.tab-button[onclick*="'${tabId}'"]`);
+            const allTabButtons = document.querySelectorAll(".tab-button");
+            allTabButtons.forEach(btn => btn.classList.remove("active"));
+            if (activeButton) {
+                activeButton.classList.add("active");
+            } else if(defaultOpenButton) {
+                 defaultOpenButton.classList.add("active");
+            }
+        }
+    });
+
+    if (!isAnyTabVisible && defaultOpenButton) {
+         openTab(null, 'OverMij');
+         document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+         defaultOpenButton.classList.add("active");
+    }
+
+    // --- Add Theme Event Listeners ---
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', handleThemeButtonClick);
+    }
+    if (prefersDarkScheme.addEventListener) {
+         prefersDarkScheme.addEventListener('change', handleSystemThemeChange);
+    } else if (prefersDarkScheme.addListener) { // Deprecated
+         prefersDarkScheme.addListener(handleSystemThemeChange);
+    }
+
+    // Final check/sync for button icon/label
+    const finalEffectiveTheme = htmlElement.matches("[data-theme='dark']") || htmlElement.classList.contains('dark-mode-preferred') ? 'dark' : 'light';
+     if (finalEffectiveTheme === 'dark') {
+         if (themeToggleIcon) themeToggleIcon.setAttribute('xlink:href', '#icon-sun');
+         if (themeToggleButton) themeToggleButton.setAttribute('aria-label', 'Switch to light mode');
+     } else {
+         if (themeToggleIcon) themeToggleIcon.setAttribute('xlink:href', '#icon-moon');
+         if (themeToggleButton) themeToggleButton.setAttribute('aria-label', 'Switch to dark mode');
+     }
+
+}); // End of DOMContentLoaded
